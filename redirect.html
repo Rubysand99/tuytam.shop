@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Đang chuyển đến Discord...</title>
+
+<style>
+body{
+background:#111;
+color:white;
+font-family:Arial;
+text-align:center;
+padding-top:100px;
+}
+
+button{
+padding:15px 30px;
+font-size:20px;
+background:#ff9900;
+border:none;
+border-radius:8px;
+}
+</style>
+
+<script>
+let time = 8;
+
+function countdown(){
+document.getElementById("time").innerHTML = time;
+
+if(time <= 0){
+document.getElementById("btn").style.display="block";
+}else{
+time--;
+setTimeout(countdown,1000);
+}
+}
+
+window.onload = countdown;
+</script>
+
+</head>
+
+<body>
+
+<h2>Đang kiểm tra truy cập...</h2>
+
+<p>Vui lòng chờ <span id="time">8</span> giây</p>
+
+<button id="btn" style="display:none"
+onclick="location.href='https://discord.gg/kYmPCKJ3X'">
+Tiếp tục vào Discord
+</button>
+
+<!-- Popunder -->
+<script src="https://pl28928436.effectivegatecpm.com/e0/ce/e7/e0cee741254541fa379b3b6f55d4be7c.js"></script>
+
+</body>
+</html>
