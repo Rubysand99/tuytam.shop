@@ -10,25 +10,7 @@ margin:0;
 font-family:Arial;
 text-align:center;
 color:white;
-background:radial-gradient(circle,#000,#111,#000);
-overflow:hidden;
-}
-
-/* glow background */
-body::before{
-content:"";
-position:fixed;
-width:200%;
-height:200%;
-background:linear-gradient(45deg,#00ffcc,#ff00cc,#00ffcc);
-animation:spin 10s linear infinite;
-opacity:0.08;
-z-index:-1;
-}
-
-@keyframes spin{
-0%{transform:rotate(0deg);}
-100%{transform:rotate(360deg);}
+background:#0b0f14;
 }
 
 .container{
@@ -37,18 +19,12 @@ margin-top:120px;
 
 button{
 padding:15px 30px;
-font-size:20px;
+font-size:18px;
 background:#00ff99;
 border:none;
 border-radius:8px;
 display:none;
 cursor:pointer;
-box-shadow:0 0 15px #00ff99;
-}
-
-button:hover{
-transform:scale(1.1);
-box-shadow:0 0 25px #00ff99;
 }
 
 #time{
@@ -75,14 +51,13 @@ setTimeout(countdown,1000);
 
 window.onload = countdown;
 
-// load ads
+// ads
 setTimeout(()=>{
   let s=document.createElement("script");
   s.src="https://pl28928436.profitablecpmratenetwork.com/e0/ce/e7/e0cee741254541fa379b3b6f55d4be7c.js";
   document.body.appendChild(s);
 },3000);
 
-// mở link kiếm tiền
 function goDiscord(){
   window.open("https://link-target.net/1359000/25H5eIkwXq9L","_blank");
 }
@@ -100,10 +75,6 @@ function goDiscord(){
 <p>Vui lòng chờ <span id="time">8</span> giây</p>
 
 <p style="color:#888;">(Chống bot & bảo vệ shop)</p>
-
-<p style="color:#00ffcc;">🟢 10–20 người đang truy cập</p>
-
-<p style="color:#ffaa00;">⚠ Sau khi vượt link, bạn sẽ vào Discord</p>
 
 <button id="btn" onclick="goDiscord()">
 👉 Tiếp tục
