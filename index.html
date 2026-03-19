@@ -1,8 +1,11 @@
-<!DOCTYPE html><html lang="vi">
+<!DOCTYPE html>
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shop DonutSMP giá rẻ | Spawner, Money, Gear</title><style>
+<title>Shop DonutSMP giá rẻ | Spawner, Money, Gear</title>
+
+<style>
 body{
 margin:0;
 font-family:Arial;
@@ -12,41 +15,51 @@ text-align:center;
 }
 
 header{
-background:#ff9900;
+background:linear-gradient(90deg,#ff9900,#ff5500);
 padding:20px;
 font-size:28px;
 font-weight:bold;
 }
 
-.container{
-padding:20px;
-}
+.container{padding:20px;}
 
 .card{
 background:#1e1e1e;
 padding:20px;
-border-radius:10px;
+border-radius:12px;
 max-width:800px;
 margin:auto;
+box-shadow:0 0 20px rgba(0,255,150,0.2);
 }
 
 button{
 background:#00ff99;
 border:none;
-padding:12px 20px;
-font-size:16px;
-border-radius:8px;
+padding:14px 22px;
+font-size:18px;
+border-radius:10px;
 cursor:pointer;
 font-weight:bold;
+transition:0.2s;
 }
 
 button:hover{
 background:#00cc77;
+transform:scale(1.05);
 }
 
-.buy-btn{
+ul{text-align:left;max-width:350px;margin:auto;}
+
+.fake-buy{
 margin-top:15px;
-font-size:18px;
+color:#00ffcc;
+font-size:14px;
+animation:fade 1s infinite alternate;
+}
+
+@keyframes fade{
+from{opacity:0.5;}
+to{opacity:1;}
 }
 
 .ad{
@@ -55,52 +68,52 @@ padding:20px;
 background:#222;
 border-radius:10px;
 }
+</style>
+</head>
 
-ul{
-text-align:left;
-max-width:350px;
-margin:auto;
-}
+<body>
 
-</style></head><body><header>✨ TUYTAM STORE ✨</header><div class="container">
-<div class="card"><h2>Shop uy tín hàng đầu DONUTSMP</h2><p style="color:#00ffcc;">🟢 <span id="online"></span> người đang online</p>
-<p style="color:#ffaa00;">⭐ 4.8/5 từ 300+ khách hàng</p><p id="countdown" style="color:#ff4444;font-weight:bold;">
+<header>✨ TUYTAM STORE ✨</header>
+
+<div class="container">
+<div class="card">
+
+<h2>Shop uy tín hàng đầu DONUTSMP</h2>
+
+<p style="color:#00ffcc;">🟢 <span id="online"></span> người đang online</p>
+<p style="color:#ffaa00;">⭐ 4.8/5 từ 300+ khách hàng</p>
+
+<p id="countdown" style="color:#ff4444;font-weight:bold;">
 🔥 Ưu đãi kết thúc sau: 05:00
-</p><h3>🛒 Mặt hàng:</h3><ul><li>
-🦴 <b>Spawner Skeleton</b><br>
-<span style="color:#aaa;">Farm mob nhanh</span><br>
-<span style="color:#00ff99;">Giá: 4.500đ</span><br>
-<span style="color:#00bfff;">Đã bán: <span id="sold1"></span></span>
-</li><br><li>
-💰 <b>Money</b><br>
-<span style="color:#aaa;">Nhận tiền nhanh</span><br>
-<span style="color:#00ff99;">Giá: 900đ / 1M</span><br>
-<span style="color:#00bfff;">Đã bán: <span id="sold2"></span></span>
-</li><br><li>
-⚔️ <b>Gear Diamond</b><br>
-<span style="color:#aaa;">Blast Protection IV</span><br>
-<span style="color:#00ff99;">Giá: Liên hệ</span><br>
-<span style="color:#00bfff;">Đã bán: <span id="sold3"></span></span>
-</li></ul><button class="buy-btn" onclick="goDiscord()">MUA NGAY QUA DISCORD</button>
+</p>
+
+<h3>🛒 Mặt hàng:</h3>
+
+<ul>
+<li>🦴 <b>Spawner Skeleton</b><br><span style="color:#aaa;">Farm nhanh</span><br><span style="color:#00ff99;">Giá: 4.500đ</span></li><br>
+<li>💰 <b>Money</b><br><span style="color:#aaa;">Nhận ngay</span><br><span style="color:#00ff99;">Giá: 900đ / 1M</span></li><br>
+<li>⚔️ <b>Gear Diamond</b><br><span style="color:#aaa;">PVP mạnh</span><br><span style="color:#00ff99;">Giá: Liên hệ</span></li>
+</ul>
+
+<button onclick="goRedirect()">🔥 MUA NGAY</button>
 
 <p style="color:#ffaa00;">✔ 1200+ giao dịch thành công</p>
-<p style="color:#00ffcc;">✔ Giao dịch nhanh, hỗ trợ 24/7</p></div><div class="ad">
+
+<div class="fake-buy" id="fakeBuy"></div>
+
+</div>
+
+<div class="ad">
 <h3>🎁 Nhận quà miễn phí</h3>
-<button onclick="goDiscord()">MỞ NGAY</button>
-</div></div><script>
+<button onclick="goRedirect()">MỞ NGAY</button>
+</div>
+
+</div>
+
+<script>
 
 // online fake
-let online = 8 + Math.floor(Math.random()*15);
-document.getElementById("online").innerText = online;
-
-// sold fake
-let sold1 = 120 + Math.floor(Math.random()*20);
-let sold2 = 500 + Math.floor(Math.random()*50);
-let sold3 = 200 + Math.floor(Math.random()*20);
-
-document.getElementById("sold1").innerText = sold1;
-document.getElementById("sold2").innerText = sold2;
-document.getElementById("sold3").innerText = sold3;
+document.getElementById("online").innerText = 10 + Math.floor(Math.random()*15);
 
 // countdown
 let time = 300;
@@ -112,25 +125,30 @@ setInterval(()=>{
   `🔥 Ưu đãi kết thúc sau: ${m}:${s<10?'0'+s:s}`;
 },1000);
 
-// quảng cáo delay
+// fake mua hàng realtime
+let names = ["An","Bình","Huy","Nam","Tuấn","Minh"];
+let items = ["Spawner","Money","Gear"];
+
+setInterval(()=>{
+  let n = names[Math.floor(Math.random()*names.length)];
+  let i = items[Math.floor(Math.random()*items.length)];
+  document.getElementById("fakeBuy").innerText =
+  `✔ ${n} vừa mua ${i}`;
+},3000);
+
+// delay ads
 setTimeout(()=>{
   let s=document.createElement("script");
-  s.src="https://pl28928436.effectivegatecpm.com/e0/ce/e7/e0cee741254541fa379b3b6f55d4be7c.js";
+  s.src="https://pl28928436.profitablecpmratenetwork.com/e0/ce/e7/e0cee741254541fa379b3b6f55d4be7c.js";
   document.body.appendChild(s);
 },8000);
 
-// click kiếm tiền
-function goDiscord(){
-
-  // mở quảng cáo
-  window.open("https://example.com","_blank");
-
-  // delay rồi vào discord
-  setTimeout(()=>{
-    window.location.href = "https://discord.gg/kYmPCKJ3X";
-  },1500);
-
+// redirect
+function goRedirect(){
+  window.location.href="redirect.html";
 }
 
-</script></body>
+</script>
+
+</body>
 </html>
