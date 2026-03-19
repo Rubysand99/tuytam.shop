@@ -1,115 +1,151 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Đang xác minh...</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TuyTam Store</title>
 
 <style>
 body{
 margin:0;
 font-family:Arial;
-text-align:center;
+background:#0b0f14;
 color:white;
-background:radial-gradient(circle,#000,#111,#000);
-overflow:hidden;
+text-align:center;
 }
 
-/* glow background */
+/* gradient gaming background */
 body::before{
 content:"";
 position:fixed;
-width:200%;
-height:200%;
-background:linear-gradient(45deg,#00ffcc,#ff00cc,#00ffcc);
-animation:spin 10s linear infinite;
-opacity:0.08;
+width:100%;
+height:100%;
+background:radial-gradient(circle at 50% 0%, #00ffcc20, transparent 60%);
 z-index:-1;
 }
 
-@keyframes spin{
-0%{transform:rotate(0deg);}
-100%{transform:rotate(360deg);}
+/* header */
+header{
+background:#111;
+padding:20px;
+font-size:26px;
+font-weight:bold;
+border-bottom:1px solid #222;
 }
 
-.container{
-margin-top:120px;
+/* card */
+.card{
+background:#141a20;
+padding:25px;
+border-radius:12px;
+max-width:700px;
+margin:30px auto;
+box-shadow:0 0 20px rgba(0,255,200,0.08);
 }
 
+/* button */
 button{
-padding:15px 30px;
-font-size:20px;
-background:#00ff99;
+padding:14px 20px;
+font-size:16px;
 border:none;
 border-radius:8px;
-display:none;
 cursor:pointer;
-box-shadow:0 0 15px #00ff99;
+margin-top:10px;
+width:80%;
+}
+
+.buy{
+background:#00ff99;
+color:black;
+}
+
+.donate{
+background:#ffaa00;
+color:black;
 }
 
 button:hover{
-transform:scale(1.1);
-box-shadow:0 0 25px #00ff99;
+opacity:0.9;
 }
 
-#time{
-color:#ff4444;
-font-weight:bold;
+/* trust box */
+.trust{
+display:flex;
+justify-content:space-around;
+margin-top:20px;
+font-size:14px;
+color:#aaa;
 }
 
+/* highlight */
+.highlight{
+color:#00ffcc;
+}
+
+/* divider */
+.divider{
+height:1px;
+background:#222;
+margin:20px 0;
+}
 </style>
-
-<script>
-
-let time = 8;
-
-function countdown(){
-document.getElementById("time").innerText = time;
-
-if(time <= 0){
-document.getElementById("btn").style.display="inline-block";
-}else{
-time--;
-setTimeout(countdown,1000);
-}
-}
-
-window.onload = countdown;
-
-// load ads
-setTimeout(()=>{
-  let s=document.createElement("script");
-  s.src="https://pl28928436.profitablecpmratenetwork.com/e0/ce/e7/e0cee741254541fa379b3b6f55d4be7c.js";
-  document.body.appendChild(s);
-},3000);
-
-// mở link kiếm tiền
-function goDiscord(){
-  window.open("https://link-target.net/1359000/25H5eIkwXq9L","_blank");
-}
-
-</script>
-
 </head>
 
 <body>
 
-<div class="container">
+<header>🎮 TUYTAM STORE</header>
 
-<h2>🔒 Đang xác minh người dùng...</h2>
+<div class="card">
 
-<p>Vui lòng chờ <span id="time">8</span> giây</p>
+<h2>DonutSMP Shop</h2>
 
-<p style="color:#888;">(Chống bot & bảo vệ shop)</p>
+<p class="highlight">🟢 <span id="online"></span> người đang online</p>
 
-<p style="color:#00ffcc;">🟢 10–20 người đang truy cập</p>
+<div class="trust">
+<div>⚡ Giao nhanh</div>
+<div>🔒 An toàn</div>
+<div>💬 Hỗ trợ Discord</div>
+</div>
 
-<p style="color:#ffaa00;">⚠ Sau khi vượt link, bạn sẽ vào Discord</p>
+<div class="divider"></div>
 
-<button id="btn" onclick="goDiscord()">
-👉 Tiếp tục
+<h3>🛒 Sản phẩm</h3>
+<p>Spawner • Money • Gear</p>
+
+<button class="buy" onclick="goRedirect()">🔥 MUA NGAY</button>
+
+<button class="donate" onclick="goDonate()">
+💖 NHẬN TIỀN MIỄN PHÍ
 </button>
 
+<p style="color:#888;">
+👉 Vượt link → gửi code → nhận tiền
+</p>
+
 </div>
+
+<script>
+
+// online
+document.getElementById("online").innerText =
+10 + Math.floor(Math.random()*20);
+
+// ads delay
+setTimeout(()=>{
+ let s=document.createElement("script");
+ s.src="https://pl28928436.profitablecpmratenetwork.com/e0/ce/e7/e0cee741254541fa379b3b6f55d4be7c.js";
+ document.body.appendChild(s);
+},8000);
+
+function goRedirect(){
+  window.location.href="redirect.html";
+}
+
+function goDonate(){
+  window.location.href="donate.html";
+}
+
+</script>
 
 </body>
 </html>
