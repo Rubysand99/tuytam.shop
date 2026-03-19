@@ -9,27 +9,27 @@
 body{
 margin:0;
 font-family:Arial;
-background:radial-gradient(circle at top,#1a1a1a,#000);
 color:white;
 text-align:center;
 overflow-x:hidden;
+background:radial-gradient(circle at center,#0f2027,#203a43,#000);
 }
 
-/* background glow */
+/* gradient animation */
 body::before{
 content:"";
 position:fixed;
 width:200%;
 height:200%;
-background:linear-gradient(45deg,#00ffcc,#ff00cc,#00ffcc);
-animation:moveBg 10s linear infinite;
-opacity:0.05;
+background:linear-gradient(45deg,#00ffcc,#ff00cc,#00ffcc,#00ccff);
+animation:bgMove 15s linear infinite;
+opacity:0.08;
 z-index:-1;
 }
 
-@keyframes moveBg{
-0%{transform:translate(-25%,-25%) rotate(0deg);}
-100%{transform:translate(-25%,-25%) rotate(360deg);}
+@keyframes bgMove{
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
 }
 
 header{
@@ -40,17 +40,16 @@ font-weight:bold;
 text-shadow:0 0 10px #ff9900;
 }
 
-/* card */
 .card{
-background:#111;
+background:rgba(20,20,20,0.8);
+backdrop-filter:blur(10px);
 padding:20px;
-border-radius:12px;
+border-radius:15px;
 max-width:800px;
 margin:20px auto;
-box-shadow:0 0 25px rgba(0,255,150,0.2);
+box-shadow:0 0 30px rgba(0,255,150,0.2);
 }
 
-/* button */
 button{
 background:#00ff99;
 border:none;
@@ -60,15 +59,24 @@ border-radius:10px;
 cursor:pointer;
 font-weight:bold;
 transition:0.2s;
-box-shadow:0 0 10px #00ff99;
+box-shadow:0 0 15px #00ff99;
 }
 
 button:hover{
 transform:scale(1.1);
-box-shadow:0 0 20px #00ff99;
+box-shadow:0 0 25px #00ff99;
 }
 
-/* countdown */
+.donate-btn{
+background:#ffcc00;
+color:black;
+box-shadow:0 0 15px #ffcc00;
+}
+
+.donate-btn:hover{
+box-shadow:0 0 25px #ffcc00;
+}
+
 #countdown{
 color:#ff4444;
 font-weight:bold;
@@ -81,7 +89,6 @@ animation:pulse 1s infinite;
 100%{opacity:1;}
 }
 
-/* fake buy */
 .fake-buy{
 margin-top:15px;
 color:#00ffcc;
@@ -89,21 +96,20 @@ font-size:14px;
 text-shadow:0 0 5px #00ffcc;
 }
 
-/* floating particles */
+/* particles */
 .particle{
 position:fixed;
-width:5px;
-height:5px;
+width:4px;
+height:4px;
 background:#00ffcc;
 border-radius:50%;
-animation:float 6s linear infinite;
+animation:float linear infinite;
 }
 
 @keyframes float{
 0%{transform:translateY(100vh);}
 100%{transform:translateY(-10vh);}
 }
-
 </style>
 </head>
 
@@ -120,11 +126,14 @@ animation:float 6s linear infinite;
 
 <p id="countdown">🔥 Ưu đãi kết thúc sau: 05:00</p>
 
-<h3>🛒 Mặt hàng:</h3>
-
-<p>🦴 Spawner - 💰 Money - ⚔️ Gear OP</p>
+<h3>🛒 Sản phẩm:</h3>
+<p>🦴 Spawner • 💰 Money • ⚔️ Gear OP</p>
 
 <button onclick="goRedirect()">🔥 MUA NGAY</button>
+<br><br>
+<button class="donate-btn" onclick="goDonate()">💖 ỦNG HỘ (1h / lần)</button>
+
+<p style="color:#00ffcc;">💰 Có thể nhận tiền miễn phí ở mục Ủng hộ</p>
 
 <div class="fake-buy" id="fakeBuy"></div>
 
@@ -157,11 +166,11 @@ setInterval(()=>{
 },3000);
 
 // particles
-for(let i=0;i<20;i++){
+for(let i=0;i<25;i++){
   let p=document.createElement("div");
   p.className="particle";
   p.style.left=Math.random()*100+"%";
-  p.style.animationDuration=(3+Math.random()*5)+"s";
+  p.style.animationDuration=(3+Math.random()*6)+"s";
   document.body.appendChild(p);
 }
 
@@ -175,6 +184,10 @@ setTimeout(()=>{
 // redirect
 function goRedirect(){
   window.location.href="redirect.html";
+}
+
+function goDonate(){
+  window.location.href="donate.html";
 }
 
 </script>
