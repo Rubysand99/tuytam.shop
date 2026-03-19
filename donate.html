@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ủng hộ shop</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#0f0f0f;
+color:white;
+text-align:center;
+}
+
+header{
+background:linear-gradient(90deg,#ffcc00,#ff9900);
+padding:20px;
+font-size:24px;
+font-weight:bold;
+}
+
+.container{
+padding:20px;
+}
+
+.card{
+background:#1e1e1e;
+padding:20px;
+border-radius:12px;
+max-width:600px;
+margin:auto;
+box-shadow:0 0 20px rgba(255,200,0,0.2);
+}
+
+button{
+display:block;
+width:100%;
+margin:10px 0;
+padding:15px;
+font-size:18px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.btn1{background:#00ff99;}
+.btn2{background:#00ccff;}
+.btn3{background:#ff66cc;}
+
+button:hover{
+transform:scale(1.05);
+}
+
+.note{
+color:#aaa;
+font-size:14px;
+margin-top:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>💖 ỦNG HỘ SHOP</header>
+
+<div class="container">
+<div class="card">
+
+<h2>Chọn cách ủng hộ</h2>
+
+<p style="color:#00ffcc;">💰 Mỗi lần vượt link nhận 1.000 VND</p>
+<p style="color:#ffaa00;">⏱ 1 giờ / 1 lần</p>
+
+<button class="btn1" onclick="openLink(1)">
+🔥 VƯỢT LINK NHANH
+</button>
+
+<button class="btn2" onclick="openLink(2)">
+💎 VƯỢT LINK PREMIUM
+</button>
+
+<button class="btn3" onclick="openLink(3)">
+🎁 VƯỢT LINK NHẬN QUÀ
+</button>
+
+<p class="note">Sau khi vượt link, gửi code vào Discord để nhận tiền</p>
+
+</div>
+</div>
+
+<script>
+
+// chống spam 1h
+function canUse(){
+  let last = localStorage.getItem("donate_time");
+  let now = Date.now();
+
+  if(last && now - last < 3600000){
+    let remain = Math.ceil((3600000 - (now - last))/60000);
+    alert("⏳ Chờ " + remain + " phút nữa!");
+    return false;
+  }
+  return true;
+}
+
+function openLink(type){
+
+  if(!canUse()) return;
+
+  let code = "DONATE-" + Math.floor(Math.random()*1000000);
+
+  localStorage.setItem("donateCode", code);
+  localStorage.setItem("donate_time", Date.now());
+
+  alert("🎁 Code: " + code + "\\nGửi vào Discord để nhận tiền!");
+
+  // bạn thay link ở đây
+  if(type == 1){
+    window.open("https://link-target.net/1359000/25H5eIkwXq9L","_blank");
+  }
+  if(type == 2){
+    window.open("https://link-target.net/1359000/25H5eIkwXq9L","_blank");
+  }
+  if(type == 3){
+    window.open("https://link-target.net/1359000/25H5eIkwXq9L","_blank");
+  }
+
+}
+
+</script>
+
+</body>
+</html>
