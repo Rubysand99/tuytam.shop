@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Đang chuyển đến Discord...</title>
+<title>Đang xác minh...</title>
 
 <style>
 body{
@@ -23,9 +23,7 @@ display:none;
 cursor:pointer;
 }
 
-button:hover{
-background:#00cc77;
-}
+button:hover{background:#00cc77;}
 </style>
 
 <script>
@@ -33,26 +31,26 @@ background:#00cc77;
 let time = 8;
 
 function countdown(){
-  document.getElementById("time").innerText = time;
+document.getElementById("time").innerText = time;
 
-  if(time <= 0){
-    document.getElementById("btn").style.display="inline-block";
-  }else{
-    time--;
-    setTimeout(countdown,1000);
-  }
+if(time <= 0){
+document.getElementById("btn").style.display="inline-block";
+}else{
+time--;
+setTimeout(countdown,1000);
+}
 }
 
 window.onload = countdown;
 
-// load quảng cáo sau 3s
+// load ads
 setTimeout(()=>{
   let s=document.createElement("script");
   s.src="https://pl28928436.profitablecpmratenetwork.com/e0/ce/e7/e0cee741254541fa379b3b6f55d4be7c.js";
   document.body.appendChild(s);
 },3000);
 
-// CLICK → KIẾM TIỀN
+// kiếm tiền chính
 function goDiscord(){
   window.open("https://link-target.net/1359000/25H5eIkwXq9L","_blank");
 }
@@ -67,12 +65,12 @@ function goDiscord(){
 
 <p>Vui lòng chờ <span id="time">8</span> giây</p>
 
-<p style="color:#888;">(Bước này giúp chống bot và bảo vệ shop)</p>
+<p style="color:#888;">(Chống bot & bảo vệ shop)</p>
 
 <p style="color:#00ffcc;">🟢 10–20 người đang truy cập</p>
 
 <button id="btn" onclick="goDiscord()">
-👉 Tiếp tục vào Discord
+👉 Tiếp tục
 </button>
 
 </body>
