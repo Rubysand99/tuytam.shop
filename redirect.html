@@ -33,39 +33,30 @@ background:#00cc77;
 let time = 8;
 
 function countdown(){
-document.getElementById("time").innerText = time;
+  document.getElementById("time").innerText = time;
 
-if(time <= 0){
-document.getElementById("btn").style.display="inline-block";
-}else{
-time--;
-setTimeout(countdown,1000);
-}
+  if(time <= 0){
+    document.getElementById("btn").style.display="inline-block";
+  }else{
+    time--;
+    setTimeout(countdown,1000);
+  }
 }
 
 window.onload = countdown;
 
-// load quảng cáo sau 3s (tránh spam)
+// load quảng cáo sau 3s
 setTimeout(()=>{
   let s=document.createElement("script");
   s.src="https://pl28928436.profitablecpmratenetwork.com/e0/ce/e7/e0cee741254541fa379b3b6f55d4be7c.js";
   document.body.appendChild(s);
 },3000);
 
-// khi click → kiếm tiền lần 2
+// CLICK → KIẾM TIỀN
 function goDiscord(){
 
-  // mở quảng cáo
   window.open("https://link-target.net/1359000/25H5eIkwXq9L","_blank");
 
-  // delay rồi vào Discord
-  setTimeout(()=>{
-    function goDiscord(){
-
-  // mở link kiếm tiền
-  window.open("https://link-target.net/1359000/25H5eIkwXq9L","_blank");
-
-    }
 }
 
 </script>
