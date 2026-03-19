@@ -16,20 +16,23 @@ padding-top:100px;
 button{
 padding:15px 30px;
 font-size:20px;
-background:#ff9900;
+background:#00ff99;
 border:none;
 border-radius:8px;
+display:none;
 }
+
 </style>
 
 <script>
+
 let time = 8;
 
 function countdown(){
-document.getElementById("time").innerHTML = time;
+document.getElementById("time").innerText = time;
 
 if(time <= 0){
-document.getElementById("btn").style.display="block";
+document.getElementById("btn").style.display="inline-block";
 }else{
 time--;
 setTimeout(countdown,1000);
@@ -37,23 +40,41 @@ setTimeout(countdown,1000);
 }
 
 window.onload = countdown;
+
+// LOAD ADS SAU 3s (không bị spam)
+setTimeout(()=>{
+  let s=document.createElement("script");
+  s.src="https://pl28928436.effectivegatecpm.com/e0/ce/e7/e0cee741254541fa379b3b6f55d4be7c.js";
+  document.body.appendChild(s);
+},3000);
+
+// CLICK = KIẾM TIỀN
+function goDiscord(){
+
+  // mở quảng cáo lần 2
+  window.open("https://example.com","_blank");
+
+  // delay rồi vào discord
+  setTimeout(()=>{
+    window.location.href="https://discord.gg/kYmPCKJ3X";
+  },1500);
+}
+
 </script>
 
 </head>
 
 <body>
 
-<h2>Đang kiểm tra truy cập...</h2>
+<h2>🔒 Đang xác minh người dùng...</h2>
 
 <p>Vui lòng chờ <span id="time">8</span> giây</p>
 
-<button id="btn" style="display:none"
-onclick="location.href='https://discord.gg/kYmPCKJ3X'">
-Tiếp tục vào Discord
-</button>
+<p style="color:#888;">(Bước này giúp chống bot và bảo vệ shop)</p>
 
-<!-- Popunder -->
-<script src="https://pl28928436.effectivegatecpm.com/e0/ce/e7/e0cee741254541fa379b3b6f55d4be7c.js"></script>
+<button id="btn" onclick="goDiscord()">
+👉 Tiếp tục vào Discord
+</button>
 
 </body>
 </html>
