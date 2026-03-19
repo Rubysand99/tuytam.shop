@@ -3,15 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shop DonutSMP giá rẻ | Spawner, Money, Gear</title>
+<title>TuyTam Store | DonutSMP</title>
 
 <style>
 body{
 margin:0;
 font-family:Arial;
-background:#0f0f0f;
+background:radial-gradient(circle at top,#1a1a1a,#000);
 color:white;
 text-align:center;
+overflow-x:hidden;
+}
+
+/* background glow */
+body::before{
+content:"";
+position:fixed;
+width:200%;
+height:200%;
+background:linear-gradient(45deg,#00ffcc,#ff00cc,#00ffcc);
+animation:moveBg 10s linear infinite;
+opacity:0.05;
+z-index:-1;
+}
+
+@keyframes moveBg{
+0%{transform:translate(-25%,-25%) rotate(0deg);}
+100%{transform:translate(-25%,-25%) rotate(360deg);}
 }
 
 header{
@@ -19,19 +37,20 @@ background:linear-gradient(90deg,#ff9900,#ff5500);
 padding:20px;
 font-size:28px;
 font-weight:bold;
+text-shadow:0 0 10px #ff9900;
 }
 
-.container{padding:20px;}
-
+/* card */
 .card{
-background:#1e1e1e;
+background:#111;
 padding:20px;
 border-radius:12px;
 max-width:800px;
-margin:auto;
-box-shadow:0 0 20px rgba(0,255,150,0.2);
+margin:20px auto;
+box-shadow:0 0 25px rgba(0,255,150,0.2);
 }
 
+/* button */
 button{
 background:#00ff99;
 border:none;
@@ -41,33 +60,50 @@ border-radius:10px;
 cursor:pointer;
 font-weight:bold;
 transition:0.2s;
+box-shadow:0 0 10px #00ff99;
 }
 
 button:hover{
-background:#00cc77;
-transform:scale(1.05);
+transform:scale(1.1);
+box-shadow:0 0 20px #00ff99;
 }
 
-ul{text-align:left;max-width:350px;margin:auto;}
+/* countdown */
+#countdown{
+color:#ff4444;
+font-weight:bold;
+animation:pulse 1s infinite;
+}
 
+@keyframes pulse{
+0%{opacity:1;}
+50%{opacity:0.5;}
+100%{opacity:1;}
+}
+
+/* fake buy */
 .fake-buy{
 margin-top:15px;
 color:#00ffcc;
 font-size:14px;
-animation:fade 1s infinite alternate;
+text-shadow:0 0 5px #00ffcc;
 }
 
-@keyframes fade{
-from{opacity:0.5;}
-to{opacity:1;}
+/* floating particles */
+.particle{
+position:fixed;
+width:5px;
+height:5px;
+background:#00ffcc;
+border-radius:50%;
+animation:float 6s linear infinite;
 }
 
-.ad{
-margin:25px 0;
-padding:20px;
-background:#222;
-border-radius:10px;
+@keyframes float{
+0%{transform:translateY(100vh);}
+100%{transform:translateY(-10vh);}
 }
+
 </style>
 </head>
 
@@ -75,7 +111,6 @@ border-radius:10px;
 
 <header>✨ TUYTAM STORE ✨</header>
 
-<div class="container">
 <div class="card">
 
 <h2>Shop uy tín hàng đầu DONUTSMP</h2>
@@ -83,30 +118,15 @@ border-radius:10px;
 <p style="color:#00ffcc;">🟢 <span id="online"></span> người đang online</p>
 <p style="color:#ffaa00;">⭐ 4.8/5 từ 300+ khách hàng</p>
 
-<p id="countdown" style="color:#ff4444;font-weight:bold;">
-🔥 Ưu đãi kết thúc sau: 05:00
-</p>
+<p id="countdown">🔥 Ưu đãi kết thúc sau: 05:00</p>
 
 <h3>🛒 Mặt hàng:</h3>
 
-<ul>
-<li>🦴 <b>Spawner Skeleton</b><br><span style="color:#aaa;">Farm nhanh</span><br><span style="color:#00ff99;">Giá: 4.500đ</span></li><br>
-<li>💰 <b>Money</b><br><span style="color:#aaa;">Nhận ngay</span><br><span style="color:#00ff99;">Giá: 900đ / 1M</span></li><br>
-<li>⚔️ <b>Gear Diamond</b><br><span style="color:#aaa;">PVP mạnh</span><br><span style="color:#00ff99;">Giá: Liên hệ</span></li>
-</ul>
+<p>🦴 Spawner - 💰 Money - ⚔️ Gear OP</p>
 
 <button onclick="goRedirect()">🔥 MUA NGAY</button>
 
-<p style="color:#ffaa00;">✔ 1200+ giao dịch thành công</p>
-
 <div class="fake-buy" id="fakeBuy"></div>
-
-</div>
-
-<div class="ad">
-<h3>🎁 Nhận quà miễn phí</h3>
-<button onclick="goRedirect()">MỞ NGAY</button>
-</div>
 
 </div>
 
@@ -125,22 +145,31 @@ setInterval(()=>{
   `🔥 Ưu đãi kết thúc sau: ${m}:${s<10?'0'+s:s}`;
 },1000);
 
-// fake mua hàng realtime
-let names = ["An","Bình","Huy","Nam","Tuấn","Minh"];
-let items = ["Spawner","Money","Gear"];
+// fake buy
+let names=["An","Bình","Huy","Nam","Tuấn","Minh"];
+let items=["Spawner","Money","Gear"];
 
 setInterval(()=>{
-  let n = names[Math.floor(Math.random()*names.length)];
-  let i = items[Math.floor(Math.random()*items.length)];
+  let n=names[Math.floor(Math.random()*names.length)];
+  let i=items[Math.floor(Math.random()*items.length)];
   document.getElementById("fakeBuy").innerText =
   `✔ ${n} vừa mua ${i}`;
 },3000);
 
-// delay ads
+// particles
+for(let i=0;i<20;i++){
+  let p=document.createElement("div");
+  p.className="particle";
+  p.style.left=Math.random()*100+"%";
+  p.style.animationDuration=(3+Math.random()*5)+"s";
+  document.body.appendChild(p);
+}
+
+// ads delay
 setTimeout(()=>{
-  let s=document.createElement("script");
-  s.src="https://pl28928436.profitablecpmratenetwork.com/e0/ce/e7/e0cee741254541fa379b3b6f55d4be7c.js";
-  document.body.appendChild(s);
+ let s=document.createElement("script");
+ s.src="https://pl28928436.profitablecpmratenetwork.com/e0/ce/e7/e0cee741254541fa379b3b6f55d4be7c.js";
+ document.body.appendChild(s);
 },8000);
 
 // redirect
