@@ -13,7 +13,6 @@ background:#0b0f14;
 color:white;
 }
 
-/* header */
 header{
 background:#111;
 padding:15px 20px;
@@ -24,13 +23,11 @@ font-size:22px;
 border-bottom:1px solid #222;
 }
 
-/* menu icon */
 .menu-icon{
 font-size:26px;
 cursor:pointer;
 }
 
-/* sidebar */
 .sidebar{
 position:fixed;
 top:0;
@@ -63,11 +60,10 @@ font-size:16px;
 }
 
 .support{
-background:#ffaa00;
+background:#00ff99;
 color:black;
 }
 
-/* overlay */
 .overlay{
 position:fixed;
 top:0;
@@ -83,7 +79,6 @@ z-index:998;
 display:block;
 }
 
-/* main card */
 .card{
 background:#141a20;
 padding:25px;
@@ -124,21 +119,8 @@ opacity:0.9;
 <h3>Menu</h3>
 
 <button class="support" onclick="goEarn()">
-🚀 VƯỢT LINK 
+🚀 VƯỢT LINK KIẾM TIỀN
 </button>
-
-<p style="font-size:13px;color:#aaa;margin-top:15px;">
-Khi bạn vượt link có quảng cáo, shop sẽ nhận khoảng <b>500đ</b>.<br><br>
-
-👉 Nếu bạn vượt link 2 lần, shop sẽ nhận khoảng <b>1.000đ</b>.<br><br>
-
-Sau khi hoàn thành, bạn chỉ cần nhập <b>tên Discord</b> khi mua hàng:<br><br>
-
-🎁 Bạn sẽ được:
-- Giảm <b>200đ</b> cho đơn đầu tiên  
-hoặc  
-- Nhận tiền trong DonutSMP
-</p>
 
 </div>
 
@@ -160,26 +142,27 @@ hoặc
 
 <script>
 
-// online fake nhẹ
+// fake online
 document.getElementById("online").innerText =
 10 + Math.floor(Math.random()*20);
 
-// menu toggle
+// menu
 function toggleMenu(){
   document.getElementById("menu").classList.toggle("active");
   document.getElementById("overlay").classList.toggle("active");
 }
 
-// redirect
+// mua hàng
 function goRedirect(){
   window.location.href="redirect.html";
 }
 
-function goDonate(){
-  window.location.href="donate.html";
+// vượt link
+function goEarn(){
+  window.location.href="https://earnpoint.hoangquan7b.workers.dev/";
 }
 
-// ads delay
+// ads
 setTimeout(()=>{
  let s=document.createElement("script");
  s.src="https://pl28928436.profitablecpmratenetwork.com/e0/ce/e7/e0cee741254541fa379b3b6f55d4be7c.js";
