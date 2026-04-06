@@ -5,34 +5,63 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TuyTam Store</title>
 
-<!-- Minecraft font -->
 <link href="https://fonts.cdnfonts.com/css/minecraft-4" rel="stylesheet">
 
 <style>
+
 body{
 margin:0;
 font-family:'Minecraft', Arial;
-background:#0b0f14 url("https://wallpapercave.com/wp/wp2757874.jpg") no-repeat center fixed;
-background-size:cover;
+background:#0b0f14;
 color:white;
 overflow-x:hidden;
 }
 
-/* dark overlay */
-body::before{
-content:"";
+/* 🌌 ANIMATED BACKGROUND */
+.bg{
 position:fixed;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.8);
+z-index:-2;
+background:linear-gradient(270deg,#0b0f14,#001a1a,#002b36,#0b0f14);
+background-size:600% 600%;
+animation:gradientMove 15s ease infinite;
+}
+
+@keyframes gradientMove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+/* particles */
+.particle{
+position:absolute;
+width:3px;
+height:3px;
+background:#00ffcc;
+border-radius:50%;
+opacity:0.6;
+animation:float 10s linear infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(100vh);}
+100%{transform:translateY(-10vh);}
+}
+
+/* overlay */
+.overlay-dark{
+position:fixed;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.7);
 z-index:-1;
 }
 
 /* LOADING */
 #loading{
 position:fixed;
-top:0;
-left:0;
 width:100%;
 height:100%;
 background:#000;
@@ -70,7 +99,7 @@ justify-content:space-between;
 box-shadow:0 0 10px #00ff99;
 }
 
-/* sidebar giữ nguyên */
+/* sidebar */
 .sidebar{
 position:fixed;
 left:-260px;
@@ -102,11 +131,12 @@ font-family:'Minecraft';
 background:rgba(20,26,32,0.9);
 padding:20px;
 margin:20px auto;
-max-width:800px;
+max-width:900px;
 border:2px solid #00ff99;
+box-shadow:0 0 25px rgba(0,255,200,0.2);
 }
 
-/* INVENTORY SHOP */
+/* inventory */
 .inventory{
 display:grid;
 grid-template-columns:repeat(3,1fr);
@@ -131,6 +161,17 @@ transform:scale(1.05);
 .item img{
 width:60px;
 height:60px;
+image-rendering: pixelated;
+}
+
+/* text */
+h3{
+color:#00ffcc;
+text-shadow:0 0 8px #00ffcc;
+}
+
+.item p{
+margin:5px 0;
 }
 
 /* footer */
@@ -148,12 +189,34 @@ padding:10px;
 background:#222;
 color:white;
 text-decoration:none;
+transition:0.2s;
+}
+
+.footer a:hover{
+background:#00ff99;
+color:black;
+transform:scale(1.1);
 }
 
 </style>
 </head>
 
 <body>
+
+<!-- BACKGROUND -->
+<div class="bg"></div>
+<div class="overlay-dark"></div>
+
+<!-- particles -->
+<script>
+for(let i=0;i<40;i++){
+ let p=document.createElement("div");
+ p.className="particle";
+ p.style.left=Math.random()*100+"%";
+ p.style.animationDuration=(5+Math.random()*10)+"s";
+ document.body.appendChild(p);
+}
+</script>
 
 <!-- LOADING -->
 <div id="loading">
@@ -178,31 +241,81 @@ text-decoration:none;
 <div class="card">
 
 <h2>DonutSMP Shop</h2>
-<p>🟢 <span id="online"></span> online</p>
 
 <h3>🧱 Minecraft Shop</h3>
 
 <div class="inventory">
 
 <div class="item" onclick="buyItem('Money')">
-<img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/4e/Emerald.png">
+<img src="https://minecraftitemids.com/item/32/emerald.png">
 <p>💸 Money</p>
 <p>700đ / 1M</p>
 </div>
 
 <div class="item" onclick="buyItem('Skeleton')">
-<img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/28/Bone.png">
+<img src="https://minecraftitemids.com/item/32/bone.png">
 <p>🦴 Skeleton</p>
-<p>3.2k VND / 3.5M</p>
+<p>3.2k / 3.5M</p>
 </div>
 
 <div class="item" onclick="buyItem('Elytra')">
-<img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e7/Elytra.png">
+<img src="https://minecraftitemids.com/item/32/elytra.png">
 <p>🪽 Elytra</p>
-<p>300k VND</p>
+<p>300k</p>
 </div>
 
 </div>
+
+<h3>📦 Stock & Giá</h3>
+
+<div class="inventory">
+
+<div class="item">
+<img src="https://minecraftitemids.com/item/32/emerald.png">
+<p>💸 Money</p>
+<p style="color:#00ff99;">Buy: 700đ</p>
+<p style="color:#ffcc00;">Sell: 950đ</p>
+</div>
+
+<div class="item">
+<img src="https://minecraftitemids.com/item/32/bone.png">
+<p>🦴 Skeleton</p>
+<p style="color:#00ff99;">Buy: 3.2k</p>
+<p style="color:#ffcc00;">Sell: 4k</p>
+</div>
+
+<div class="item">
+<img src="https://minecraftitemids.com/item/32/elytra.png">
+<p>🪽 Elytra</p>
+<p style="color:#00ff99;">Buy: 300k</p>
+<p style="color:#ffcc00;">Sell: 330k</p>
+</div>
+
+</div>
+
+<h3>🛠 Dịch vụ khác</h3>
+
+<div class="inventory">
+
+<div class="item">
+<img src="https://minecraftitemids.com/item/32/grass_block.png">
+<p>🏗 Order Base</p>
+</div>
+
+<div class="item">
+<img src="https://minecraftitemids.com/item/32/redstone.png">
+<p>⚡ Mod Fix Lag</p>
+</div>
+
+</div>
+
+<h3>🌐 Cộng đồng</h3>
+<p>
+✔️ Hỗ trợ 24/7<br>
+🎉 Event & Giveaway<br>
+📦 Share resource pack, config<br>
+💬 Support Minecraft
+</p>
 
 </div>
 
@@ -214,32 +327,25 @@ text-decoration:none;
 <p>Made by rubynek209</p>
 </div>
 
-<!-- SOUND -->
 <audio id="clickSound" src="https://www.myinstants.com/media/sounds/minecraft-click.mp3"></audio>
 
 <script>
 
-// LOADING
+// loading
 setTimeout(()=>{
  document.getElementById("loading").style.display="none";
 },3000);
-
-// online fake
-document.getElementById("online").innerText =
-10 + Math.floor(Math.random()*20);
 
 // sound
 function playSound(){
  document.getElementById("clickSound").play();
 }
 
-// menu
 function toggleMenu(){
  playSound();
  document.getElementById("menu").classList.toggle("active");
 }
 
-// redirect
 function goEarn(){
  playSound();
  window.location.href="https://earnpoint.hoangquan7b.workers.dev/";
@@ -250,7 +356,6 @@ function goHome(){
  window.location.href="#";
 }
 
-// BUY ITEM
 function buyItem(name){
  playSound();
  alert("Bạn đã chọn mua: " + name);
