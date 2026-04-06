@@ -16,7 +16,7 @@ color:white;
 overflow-x:hidden;
 }
 
-/* 🌌 background */
+/* 🌌 Background động */
 .bg{
 position:fixed;
 width:100%;
@@ -84,18 +84,23 @@ justify-content:space-between;
 box-shadow:0 0 10px #00ff99;
 }
 
-/* sidebar */
+/* ✅ Menu sidebar fix */
 .sidebar{
 position:fixed;
-left:-260px;
+top:0;
+left:0;
 width:260px;
 height:100%;
 background:#111;
 padding:20px;
+transform:translateX(-100%);
 transition:0.3s;
 z-index:999;
 }
-.sidebar.active{left:0;}
+.sidebar.active{
+transform:translateX(0);
+}
+
 .sidebar button{
 width:100%;
 padding:12px;
@@ -103,6 +108,28 @@ margin-top:10px;
 border:none;
 cursor:pointer;
 font-family:'Minecraft';
+position:relative;
+overflow:hidden;
+}
+
+/* ⚡ Ripple glow */
+.sidebar button::after{
+content:"";
+position:absolute;
+width:0;
+height:0;
+background:rgba(0,255,255,0.5);
+border-radius:50%;
+transform:translate(-50%,-50%);
+left:50%;
+top:50%;
+transition:0.5s;
+}
+
+.sidebar button:active::after{
+width:200%;
+height:200%;
+opacity:0;
 }
 
 /* card */
@@ -122,7 +149,7 @@ gap:15px;
 margin-top:20px;
 }
 
-/* ⚡ item */
+/* item */
 .item{
 background:#1a1a1a;
 border:2px solid #555;
@@ -213,7 +240,7 @@ for(let i=0;i<40;i++){
 </script>
 
 <div id="loading">
-<h2>Loading...</h2>
+<h2>Đang tải giao diện Minecraft...</h2>
 <div class="bar"><div class="progress"></div></div>
 </div>
 
@@ -225,44 +252,44 @@ for(let i=0;i<40;i++){
 <div class="sidebar" id="menu">
 <h3>Menu</h3>
 <button onclick="goBuy()">🏠 Trang chủ</button>
-<button onclick="goBuy()">🚀 EarnPoint</button>
+<button onclick="goBuy()">🚀 Kiếm điểm (EarnPoint)</button>
 </div>
 
-<!-- 🔥 SHOP + GIÁ GỘP -->
+<!-- SHOP -->
 <div class="card">
 
 <h2>DonutSMP Shop</h2>
 
-<h3>🧱 Shop & Giá</h3>
+<h3>🧱 Cửa hàng và bảng giá</h3>
 
 <div class="inventory">
 
 <div class="item" onclick="goBuy()">
 <img src="https://minecraftitemids.com/item/32/emerald.png">
 <p>💸 Money</p>
-<p style="color:#00ff99;">Buy: 700đ / 1M</p>
-<p style="color:#ffcc00;">Sell: 950đ / 1M</p>
+<p style="color:#00ff99;">Mua: 700đ / 1M</p>
+<p style="color:#ffcc00;">Bán: 950đ / 1M</p>
 </div>
 
 <div class="item" onclick="goBuy()">
 <img src="https://minecraftitemids.com/item/32/bone.png">
 <p>🦴 Skeleton</p>
-<p style="color:#00ff99;">Buy: 3.2k / 3.5M</p>
-<p style="color:#ffcc00;">Sell: 4k / 5M</p>
+<p style="color:#00ff99;">Mua: 3.2k / 3.5M</p>
+<p style="color:#ffcc00;">Bán: 4k / 5M</p>
 </div>
 
 <div class="item" onclick="goBuy()">
 <img src="https://minecraftitemids.com/item/32/elytra.png">
 <p>🪽 Elytra</p>
-<p style="color:#00ff99;">Buy: 300k</p>
-<p style="color:#ffcc00;">Sell: 330k</p>
+<p style="color:#00ff99;">Mua: 300k</p>
+<p style="color:#ffcc00;">Bán: 330k</p>
 </div>
 
 <div class="item" onclick="goBuy()">
 <img src="https://minecraftitemids.com/item/32/diamond_sword.png">
-<p>⚔️ Gear</p>
-<p style="color:#00ff99;">Buy: Liên hệ</p>
-<p style="color:#ffcc00;">Sell: Liên hệ</p>
+<p>⚔️ Trang bị (Gear)</p>
+<p style="color:#00ff99;">Mua: Liên hệ</p>
+<p style="color:#ffcc00;">Bán: Liên hệ</p>
 </div>
 
 </div>
@@ -273,12 +300,12 @@ for(let i=0;i<40;i++){
 
 <div class="item" onclick="goBuy()">
 <img src="https://minecraftitemids.com/item/32/grass_block.png">
-<p>🏗 Order Base</p>
+<p>🏗 Xây dựng căn cứ (Order Base)</p>
 </div>
 
 <div class="item" onclick="goBuy()">
 <img src="https://minecraftitemids.com/item/32/redstone.png">
-<p>⚡ Mod Fix Lag</p>
+<p>⚡ Cài đặt mod giảm lag</p>
 </div>
 
 </div>
@@ -286,15 +313,15 @@ for(let i=0;i<40;i++){
 <h3>🌐 Cộng đồng</h3>
 
 <p>
-✔️ Hỗ trợ 24/7<br>
-🎉 Event & Giveaway<br>
-📦 Share resource pack & config<br>
-💬 Support Minecraft
+✔️ Hỗ trợ người chơi 24/7<br>
+🎉 Tổ chức sự kiện và giveaway thường xuyên<br>
+📦 Chia sẻ resource pack và cấu hình client<br>
+💬 Giải đáp mọi thắc mắc về Minecraft
 </p>
 
 </div>
 
-<!-- footer -->
+<!-- FOOTER -->
 <div class="footer">
 
 <a href="https://www.youtube.com/@Rubyne_36rauma" target="_blank" onclick="playSound()">📺 YouTube</a>
@@ -332,4 +359,4 @@ window.location.href="https://link-target.net/1359000/25H5eIkwXq9L";
 </script>
 
 </body>
-</html>
+ </html>
