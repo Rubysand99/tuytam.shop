@@ -5,32 +5,74 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TuyTam Store</title>
 
+<!-- Minecraft font -->
+<link href="https://fonts.cdnfonts.com/css/minecraft-4" rel="stylesheet">
+
 <style>
 body{
 margin:0;
-font-family:Arial;
-background:#0b0f14;
+font-family:'Minecraft', Arial;
+background:#0b0f14 url("https://wallpapercave.com/wp/wp2757874.jpg") no-repeat center fixed;
+background-size:cover;
 color:white;
+overflow-x:hidden;
 }
 
-header{
-background:#111;
-padding:15px 20px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-font-size:22px;
-border-bottom:1px solid #222;
+/* dark overlay */
+body::before{
+content:"";
+position:fixed;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+z-index:-1;
 }
 
-.menu-icon{
-font-size:26px;
-cursor:pointer;
-}
-
-.sidebar{
+/* LOADING */
+#loading{
 position:fixed;
 top:0;
+left:0;
+width:100%;
+height:100%;
+background:#000;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:9999;
+}
+
+.bar{
+width:300px;
+height:20px;
+border:2px solid #fff;
+margin-top:20px;
+}
+
+.progress{
+height:100%;
+width:0%;
+background:#00ff99;
+animation:load 3s forwards;
+}
+
+@keyframes load{
+to{width:100%;}
+}
+
+/* header */
+header{
+background:#111;
+padding:15px;
+display:flex;
+justify-content:space-between;
+box-shadow:0 0 10px #00ff99;
+}
+
+/* sidebar giữ nguyên */
+.sidebar{
+position:fixed;
 left:-260px;
 width:260px;
 height:100%;
@@ -38,69 +80,74 @@ background:#111;
 padding:20px;
 transition:0.3s;
 z-index:999;
-box-shadow:2px 0 10px rgba(0,0,0,0.5);
 }
 
-.sidebar.active{
-left:0;
-}
-
-.sidebar h3{
-margin-top:0;
-}
+.sidebar.active{left:0;}
 
 .sidebar button{
 width:100%;
 padding:12px;
 margin-top:10px;
 border:none;
-border-radius:8px;
+border-radius:6px;
 cursor:pointer;
-font-size:16px;
+font-family:'Minecraft';
 }
 
-.support{
-background:#00ff99;
-color:black;
-}
+.home{background:#00ccff;}
+.support{background:#00ff99;}
 
-.overlay{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.5);
-display:none;
-z-index:998;
-}
-
-.overlay.active{
-display:block;
-}
-
+/* card */
 .card{
-background:#141a20;
-padding:25px;
-border-radius:12px;
-max-width:700px;
-margin:30px auto;
+background:rgba(20,26,32,0.9);
+padding:20px;
+margin:20px auto;
+max-width:800px;
+border:2px solid #00ff99;
+}
+
+/* INVENTORY SHOP */
+.inventory{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+margin-top:20px;
+}
+
+.item{
+background:#1a1a1a;
+border:2px solid #555;
+padding:10px;
 text-align:center;
-box-shadow:0 0 20px rgba(0,255,200,0.08);
-}
-
-button.buy{
-background:#00ff99;
-color:black;
-padding:14px 20px;
-border:none;
-border-radius:8px;
 cursor:pointer;
-font-size:16px;
+transition:0.2s;
 }
 
-button.buy:hover{
-opacity:0.9;
+.item:hover{
+border:2px solid #00ff99;
+transform:scale(1.05);
+}
+
+.item img{
+width:60px;
+height:60px;
+}
+
+/* footer */
+.footer{
+text-align:center;
+padding:20px;
+background:#111;
+margin-top:40px;
+}
+
+.footer a{
+margin:10px;
+display:inline-block;
+padding:10px;
+background:#222;
+color:white;
+text-decoration:none;
 }
 
 </style>
@@ -108,68 +155,107 @@ opacity:0.9;
 
 <body>
 
-<header>
-☰ TUYTAM STORE
-<div class="menu-icon" onclick="toggleMenu()">☰</div>
-</header>
-
-<!-- sidebar -->
-<div class="sidebar" id="menu">
-
-<h3>Menu</h3>
-
-<button class="support" onclick="goEarn()">
-🚀 EarnPoint
-</button>
-
+<!-- LOADING -->
+<div id="loading">
+<h2>Loading Minecraft UI...</h2>
+<div class="bar">
+<div class="progress"></div>
+</div>
 </div>
 
-<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+<header>
+☰ TUYTAM STORE
+<div onclick="toggleMenu()">☰</div>
+</header>
 
-<!-- main -->
+<div class="sidebar" id="menu">
+<h3>Menu</h3>
+<button class="home" onclick="goHome()">🏠 Trang chủ</button>
+<button class="support" onclick="goEarn()">🚀 EarnPoint</button>
+</div>
+
+<!-- MAIN -->
 <div class="card">
 
 <h2>DonutSMP Shop</h2>
+<p>🟢 <span id="online"></span> online</p>
 
-<p style="color:#00ffcc;">🟢 <span id="online"></span> người đang online</p>
+<h3>🧱 Minecraft Shop</h3>
 
-<h3>Sản phẩm</h3>
-<p>Spawner • Money • Gear</p>
+<div class="inventory">
 
-<a href="https://link-target.net/1359000/25H5eIkwXq9L">
-    <button class="buy">🔥 MUA NGAY</button>
-</a>
+<div class="item" onclick="buyItem('Money')">
+<img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/4e/Emerald.png">
+<p>💸 Money</p>
+<p>700đ / 1M</p>
+</div>
+
+<div class="item" onclick="buyItem('Skeleton')">
+<img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/28/Bone.png">
+<p>🦴 Skeleton</p>
+<p>3.2k VND / 3.5M</p>
+</div>
+
+<div class="item" onclick="buyItem('Elytra')">
+<img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e7/Elytra.png">
+<p>🪽 Elytra</p>
+<p>300k VND</p>
+</div>
 
 </div>
 
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+<a href="https://www.youtube.com/@Rubyne_36rauma">YouTube</a>
+<a href="https://www.tiktok.com/@tuytam156">TikTok</a>
+<a href="https://discord.gg/FkC45DwtyN">Discord</a>
+<p>Made by rubynek209</p>
+</div>
+
+<!-- SOUND -->
+<audio id="clickSound" src="https://www.myinstants.com/media/sounds/minecraft-click.mp3"></audio>
+
 <script>
 
-// fake online
+// LOADING
+setTimeout(()=>{
+ document.getElementById("loading").style.display="none";
+},3000);
+
+// online fake
 document.getElementById("online").innerText =
 10 + Math.floor(Math.random()*20);
 
+// sound
+function playSound(){
+ document.getElementById("clickSound").play();
+}
+
 // menu
 function toggleMenu(){
-  document.getElementById("menu").classList.toggle("active");
-  document.getElementById("overlay").classList.toggle("active");
+ playSound();
+ document.getElementById("menu").classList.toggle("active");
 }
 
-// mua hàng
-function goRedirect(){
-  window.location.href="redirect.html";
-}
-
-// vượt link
+// redirect
 function goEarn(){
-  window.location.href="https://earnpoint.hoangquan7b.workers.dev/";
+ playSound();
+ window.location.href="https://earnpoint.hoangquan7b.workers.dev/";
 }
 
-// ads
-setTimeout(()=>{
- let s=document.createElement("script");
- s.src="https://pl28928436.profitablecpmratenetwork.com/e0/ce/e7/e0cee741254541fa379b3b6f55d4be7c.js";
- document.body.appendChild(s);
-},8000);
+function goHome(){
+ playSound();
+ window.location.href="#";
+}
+
+// BUY ITEM
+function buyItem(name){
+ playSound();
+ alert("Bạn đã chọn mua: " + name);
+ window.location.href="https://link-target.net/1359000/25H5eIkwXq9L";
+}
 
 </script>
 
