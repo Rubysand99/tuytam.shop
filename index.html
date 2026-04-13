@@ -16,7 +16,7 @@ color:white;
 overflow-x:hidden;
 }
 
-/* 🌌 background */
+/* 🌌 Background động */
 .bg{
 position:fixed;
 width:100%;
@@ -32,12 +32,6 @@ animation:gradientMove 15s ease infinite;
 100%{background-position:0%}
 }
 
-/* ⚡ LIVE MODE */
-.live-mode{
-background:linear-gradient(270deg,#0b0f14,#001f2b,#003344,#0b0f14);
-animation:gradientMove 8s ease infinite;
-}
-
 .overlay-dark{
 position:fixed;
 width:100%;
@@ -51,7 +45,7 @@ z-index:-1;
 position:absolute;
 width:3px;
 height:3px;
-background:#00ffff;
+background:#00ffcc;
 border-radius:50%;
 animation:float linear infinite;
 }
@@ -75,7 +69,7 @@ z-index:9999;
 .bar{width:300px;height:20px;border:2px solid #fff}
 .progress{
 height:100%;
-background:#00ffff;
+background:#00ff99;
 width:0;
 animation:load 3s forwards;
 }
@@ -87,10 +81,10 @@ background:#111;
 padding:15px;
 display:flex;
 justify-content:space-between;
-box-shadow:0 0 10px #00ffff;
+box-shadow:0 0 10px #00ff99;
 }
 
-/* sidebar */
+/* ✅ Menu sidebar fix */
 .sidebar{
 position:fixed;
 top:0;
@@ -103,7 +97,9 @@ transform:translateX(-100%);
 transition:0.3s;
 z-index:999;
 }
-.sidebar.active{transform:translateX(0);}
+.sidebar.active{
+transform:translateX(0);
+}
 
 .sidebar button{
 width:100%;
@@ -112,6 +108,28 @@ margin-top:10px;
 border:none;
 cursor:pointer;
 font-family:'Minecraft';
+position:relative;
+overflow:hidden;
+}
+
+/* ⚡ Ripple glow */
+.sidebar button::after{
+content:"";
+position:absolute;
+width:0;
+height:0;
+background:rgba(0,255,255,0.5);
+border-radius:50%;
+transform:translate(-50%,-50%);
+left:50%;
+top:50%;
+transition:0.5s;
+}
+
+.sidebar button:active::after{
+width:200%;
+height:200%;
+opacity:0;
 }
 
 /* card */
@@ -120,7 +138,7 @@ background:rgba(20,26,32,0.9);
 padding:20px;
 margin:20px auto;
 max-width:900px;
-border:2px solid #00ffff;
+border:2px solid #00ff99;
 }
 
 /* inventory */
@@ -128,6 +146,7 @@ border:2px solid #00ffff;
 display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:15px;
+margin-top:20px;
 }
 
 /* item */
@@ -137,12 +156,35 @@ border:2px solid #555;
 padding:10px;
 text-align:center;
 cursor:pointer;
+position:relative;
+overflow:hidden;
 transition:0.2s;
 }
+
 .item:hover{
 border:2px solid #00ffff;
-box-shadow:0 0 10px #00ffff,0 0 20px #00ffff;
+box-shadow:0 0 10px #00ffff,0 0 20px #00ffff,0 0 40px #00ffff;
 transform:scale(1.05);
+}
+
+/* lightning */
+.item::before{
+content:"";
+position:absolute;
+top:-50%;
+left:-50%;
+width:200%;
+height:200%;
+background:linear-gradient(120deg, transparent, #00ffff, transparent);
+opacity:0;
+}
+.item:hover::before{
+opacity:1;
+animation:lightningMove 1s linear infinite;
+}
+@keyframes lightningMove{
+0%{transform:translateX(-100%) rotate(0deg);}
+100%{transform:translateX(100%) rotate(360deg);}
 }
 
 .item img{
@@ -150,37 +192,9 @@ width:60px;
 image-rendering:pixelated;
 }
 
-/* chart */
-#viewerChart{
-background:#0f141a;
-border:2px solid #ffffff;
-box-shadow:0 0 10px #00ffff;
-padding:10px;
-border-radius:10px;
-}
-
-#liveCard.live-glow{
-box-shadow:0 0 20px #00ffff,0 0 40px #00ffff;
-}
-
-/* popup */
-#popup{
-display:none;
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-background:#111;
-padding:30px;
-border:2px solid #00ffff;
-box-shadow:0 0 20px #00ffff;
-z-index:9999;
-text-align:center;
-}
-
-.live-text{
-color:#00ffff;
-text-shadow:0 0 10px #00ffff;
+h3{
+color:#00ffcc;
+text-shadow:0 0 8px #00ffcc;
 }
 
 /* footer */
@@ -190,6 +204,23 @@ padding:20px;
 background:#111;
 margin-top:40px;
 }
+
+.footer a{
+margin:10px;
+display:inline-block;
+padding:10px;
+background:#222;
+color:white;
+text-decoration:none;
+transition:0.2s;
+}
+
+.footer a:hover{
+background:#00ffff;
+color:black;
+box-shadow:0 0 10px #00ffff,0 0 20px #00ffff,0 0 40px #00ffff;
+transform:scale(1.1);
+}
 </style>
 </head>
 
@@ -198,9 +229,18 @@ margin-top:40px;
 <div class="bg"></div>
 <div class="overlay-dark"></div>
 
-<!-- loading -->
+<script>
+for(let i=0;i<40;i++){
+ let p=document.createElement("div");
+ p.className="particle";
+ p.style.left=Math.random()*100+"%";
+ p.style.animationDuration=(5+Math.random()*10)+"s";
+ document.body.appendChild(p);
+}
+</script>
+
 <div id="loading">
-<h2>Đang tải...</h2>
+<h2>Đang tải giao diện Minecraft...</h2>
 <div class="bar"><div class="progress"></div></div>
 </div>
 
@@ -211,119 +251,254 @@ margin-top:40px;
 
 <div class="sidebar" id="menu">
 <h3>Menu</h3>
-<button onclick="goBuy()">Trang chủ</button>
+<button onclick="goBuy()">🏠 Trang chủ</button>
+<button onclick="goBuy()">🚀 Kiếm điểm (EarnPoint)</button>
 </div>
 
 <!-- SHOP -->
 <div class="card">
+
 <h2>DonutSMP Shop</h2>
 
+<h3>🧱 Cửa hàng và bảng giá</h3>
+
 <div class="inventory">
-<div class="item"><p>💸 Money</p></div>
-<div class="item"><p>🦴 Skeleton</p></div>
-<div class="item"><p>🪽 Elytra</p></div>
-</div>
-</div>
 
-<!-- 📊 DASHBOARD -->
-<div class="card" id="liveCard">
-<h3 class="live-text">📊 Live Dashboard</h3>
-<canvas id="viewerChart"></canvas>
-
-<p>👀 Current: <span id="current">0</span></p>
-<p>🔥 Peak: <span id="peak">0</span></p>
-<p>📈 Avg: <span id="avg">0</span></p>
+<div class="item" onclick="goBuy()">
+<img src="https://minecraftitemids.com/item/32/emerald.png">
+<p>💸 Money</p>
+<p style="color:#00ff99;">Mua: 700đ / 1M </p>
+<p style="color:#ffcc00;">Bán: 950đ / 1M </p>
 </div>
 
-<!-- popup -->
-<div id="popup">
-<h2 class="live-text">⚡ ĐANG LIVE</h2>
-<button onclick="openLive()">Xem ngay</button>
+<div class="item" onclick="goBuy()">
+<img src="https://minecraftitemids.com/item/32/bone.png">
+<p>🦴 Skeleton</p>
+<p style="color:#00ff99;">Mua: 3.2k / 3.5M</p>
+<p style="color:#ffcc00;">Bán: 4k / 5M</p>
 </div>
 
+<div class="item" onclick="goBuy()">
+<img src="https://minecraftitemids.com/item/32/elytra.png">
+<p>🪽 Elytra</p>
+<p style="color:#00ff99;">Mua: 300k</p>
+<p style="color:#ffcc00;">Bán: 330k</p>
+</div>
+
+<div class="item" onclick="goBuy()">
+<img src="https://minecraftitemids.com/item/32/diamond_sword.png">
+<p>⚔️ Trang bị (Gear)</p>
+<p style="color:#00ff99;">Mua: Liên hệ</p>
+<p style="color:#ffcc00;">Bán: Liên hệ</p>
+</div>
+
+</div>
+
+<h3>🛠 Dịch vụ</h3>
+
+<div class="inventory">
+
+<div class="item" onclick="goBuy()">
+<img src="https://minecraftitemids.com/item/32/grass_block.png">
+<p>🏗 Xây dựng căn cứ (Order Base)</p>
+</div>
+
+<div class="item" onclick="goBuy()">
+<img src="https://minecraftitemids.com/item/32/redstone.png">
+<p>⚡ Cài đặt mod giảm lag</p>
+</div>
+
+</div>
+
+<h3>🌐 Cộng đồng</h3>
+
+<p>
+✔️ Hỗ trợ người chơi 24/7<br>
+🎉 Tổ chức sự kiện và giveaway thường xuyên<br>
+📦 Chia sẻ resource pack và cấu hình client<br>
+💬 Giải đáp mọi thắc mắc về Minecraft
+</p>
+
+</div>
+
+<!-- FOOTER -->
 <div class="footer">
-<p>Made by ruby</p>
+
+<a href="https://www.youtube.com/@Rubyne_36rauma" target="_blank" onclick="playSound()">📺 YouTube</a>
+
+<a href="https://www.tiktok.com/@tuytam156" target="_blank" onclick="playSound()">🎵 TikTok</a>
+
+<a href="https://link-target.net/1359000/25H5eIkwXq9L" target="_blank" onclick="playSound()">💬 Discord</a>
+
+<p>Made by rubynek209</p>
+
 </div>
 
 <audio id="clickSound" src="https://www.myinstants.com/media/sounds/minecraft-click.mp3"></audio>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script>
-// loading
-setTimeout(()=>{document.getElementById("loading").style.display="none";},2000);
 
-// menu
-function toggleMenu(){
-document.getElementById("menu").classList.toggle("active");
-}
+setTimeout(()=>{
+document.getElementById("loading").style.display="none";
+},3000);
 
-// sound
-function goBuy(){
+function playSound(){
 document.getElementById("clickSound").play();
 }
 
-// popup
-function openLive(){
-window.open("https://tiktok.com/@tuytam156","_blank");
+function toggleMenu(){
+playSound();
+document.getElementById("menu").classList.toggle("active");
 }
 
-// chart
-let dataArr = [];
-let labels = [];
-let peak = 0;
-
-const ctx = document.getElementById('viewerChart').getContext('2d');
-
-const chart = new Chart(ctx,{
-type:'line',
-data:{
-labels:labels,
-datasets:[{
-data:dataArr,
-borderColor:"#00ffff",
-tension:0.4
-}]
-}
-});
-
-// websocket
-let ws = new WebSocket("ws://localhost:8765");
-
-ws.onmessage = (event)=>{
-let data = JSON.parse(event.data);
-
-if(data.live){
-document.body.classList.add("live-mode");
-
-// update chart
-dataArr.push(data.viewer);
-labels.push("");
-
-if(dataArr.length>30){
-dataArr.shift();
-labels.shift();
+function goBuy(){
+playSound();
+window.location.href="https://link-target.net/1359000/25H5eIkwXq9L";
 }
 
-document.getElementById("current").innerText = data.viewer;
-
-if(data.viewer>peak) peak=data.viewer;
-document.getElementById("peak").innerText = peak;
-
-let avg = dataArr.reduce((a,b)=>a+b,0)/dataArr.length;
-document.getElementById("avg").innerText = Math.round(avg);
-
-chart.update();
-
-// popup
-document.getElementById("popup").style.display="block";
-setTimeout(()=>{document.getElementById("popup").style.display="none"},3000);
-
-}else{
-document.body.classList.remove("live-mode");
-}
-};
 </script>
 
+  <!-- ⚡ LIVE MINI ICON (khi chưa live) -->
+<div id="liveMini">
+⚡ LIVE
+</div>
+
+<!-- 📊 LIVE PANEL -->
+<div id="livePanel">
+<h3>📡 Live Stats</h3>
+<canvas id="liveChart"></canvas>
+</div>
+
+<!-- 🔔 POPUP -->
+<div id="livePopup">🔴 Stream đang LIVE!</div>
+
+<style>
+/* ⚡ MINI ICON */
+#liveMini{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#00ffff;
+color:black;
+padding:10px 15px;
+border-radius:20px;
+font-weight:bold;
+box-shadow:0 0 10px #00ffff,0 0 20px #00ffff;
+animation:pulse 1.5s infinite;
+z-index:999;
+}
+
+@keyframes pulse{
+0%{box-shadow:0 0 5px #00ffff;}
+50%{box-shadow:0 0 25px #00ffff;}
+100%{box-shadow:0 0 5px #00ffff;}
+}
+
+/* 📊 PANEL */
+#livePanel{
+display:none;
+position:relative;
+margin:40px auto;
+max-width:900px;
+padding:20px;
+border:2px solid #00ffff;
+box-shadow:0 0 10px #00ffff,0 0 40px #00ffff;
+animation:neonBorder 2s infinite alternate;
+}
+
+@keyframes neonBorder{
+from{box-shadow:0 0 10px #00ffff;}
+to{box-shadow:0 0 30px #00ffff,0 0 60px #00ffff;}
+}
+
+/* 🔔 POPUP */
+#livePopup{
+position:fixed;
+top:20px;
+right:-300px;
+background:#00ffff;
+color:black;
+padding:15px;
+border-radius:10px;
+font-weight:bold;
+transition:0.5s;
+z-index:9999;
+}
+</style>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+let live = false;
+let ws;
+let chart;
+let data = [];
+
+// 📊 INIT CHART
+function initChart(){
+const ctx = document.getElementById("liveChart");
+
+chart = new Chart(ctx,{
+type:"line",
+data:{
+labels:[],
+datasets:[{
+label:"Viewers",
+data:[],
+borderWidth:2,
+tension:0.4
+}]
+},
+options:{
+animation:false,
+scales:{
+x:{display:false},
+y:{beginAtZero:true}
+}
+}
+});
+}
+
+// ⚡ START LIVE
+function startLive(){
+live = true;
+
+document.getElementById("liveMini").style.display="none";
+document.getElementById("livePanel").style.display="block";
+
+// popup
+let popup = document.getElementById("livePopup");
+popup.style.right="20px";
+setTimeout(()=>popup.style.right="-300px",3000);
+
+// websocket
+ws = new WebSocket("ws://localhost:8765");
+
+ws.onmessage = (event)=>{
+let value = parseInt(event.data);
+
+chart.data.labels.push("");
+chart.data.datasets[0].data.push(value);
+
+if(chart.data.labels.length > 20){
+chart.data.labels.shift();
+chart.data.datasets[0].data.shift();
+}
+
+chart.update();
+};
+}
+
+// 🚀 AUTO INIT
+setTimeout(()=>{
+initChart();
+
+// ⚡ DEMO: giả lập có live sau 5s (bạn có thể xoá)
+setTimeout(startLive,5000);
+
+},3000);
+</script>
+  
 </body>
 </html>
