@@ -321,6 +321,16 @@ for(let i=0;i<40;i++){
 
 </div>
 
+ <h3>🔴 TikTok Livestream</h3>
+
+<div class="card" id="liveBox" style="border-color:#ff4444;">
+<p id="liveStatus">⚫ Đang kiểm tra...</p>
+<p id="liveTitle"></p>
+<p id="liveViewers"></p>
+
+<img id="liveChart" style="width:100%;margin-top:10px;border:2px solid #00ffcc;">
+</div>
+ 
 <!-- FOOTER -->
 <div class="footer">
 
@@ -356,6 +366,61 @@ playSound();
 window.location.href="https://link-target.net/1359000/25H5eIkwXq9L";
 }
 
+ const API = "https://website-kiemtien.onrender.com"; // API của bạn
+let viewerHistory = [];
+
+async function updateLive(){
+    try{
+        const res = await fetch(API + "/api");
+        const data = await res.json();
+
+        const status = document.getElementById("liveStatus");
+        const title = document.getElementById("liveTitle");
+        const viewers = document.getElementById("liveViewers");
+
+        if(data.live){
+            status.innerHTML = "🔴 ĐANG LIVE";
+            status.style.color = "#ff4444";
+
+            title.innerHTML = "🎯 " + (data.title || "Livestream");
+            viewers.innerHTML = "👀 Viewer: " + (data.viewers || 0);
+
+            viewerHistory.push(data.viewers || 0);
+
+            updateChart();
+        }else{
+            status.innerHTML = "⚫ OFFLINE";
+            status.style.color = "gray";
+        }
+
+    }catch(e){
+        console.log("API lỗi");
+    }
+}
+
+function updateChart(){
+    if(viewerHistory.length < 2) return;
+
+    const chartData = {
+        type: "line",
+        data: {
+            labels: viewerHistory.map((_, i) => i),
+            datasets: [{
+                label: "Viewer",
+                data: viewerHistory
+            }]
+        }
+    };
+
+    const url = "https://quickchart.io/chart?c=" + encodeURIComponent(JSON.stringify(chartData));
+
+    document.getElementById("liveChart").src = url;
+}
+
+// ⏱ update mỗi 10s
+setInterval(updateLive, 10000);
+updateLive();
+ 
 </script>
 
 </body>
